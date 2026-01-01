@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace ShopCMS.Domain.Entities
 {
-   
-        public class Currency
-        {
-        
+
+    public class Currency
+    {
+
         public string CurrencyCode { get; set; }
 
-            public string Name { get; set; }
+        public string Name { get; set; }
 
-            public bool IsEnabled { get; set; }
+        public bool IsEnabled { get; set; }
 
-        }
-    
+    }
+
 
 }
