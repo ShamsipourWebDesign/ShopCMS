@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace ShopCMS.Domain.Entities
 {
-   
-        public class ProductDiscount
-        {
-        
-            public int ProductId { get; set; }
 
-            public int DiscountRuleId { get; set; }
+    public class ProductDiscount
+    {
 
-            // Navigation
-            public Product Product { get; set; }
+        public int ProductId { get; set; }
 
-            public DiscountRule DiscountRule { get; set; }
-        }
-        
+        public int DiscountRuleId { get; set; }
+
+        // Navigation
+        public Product Product { get; set; }
+
+        public DiscountRule DiscountRule { get; set; }
+    }
+
 
 }

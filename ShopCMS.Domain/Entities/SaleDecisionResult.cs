@@ -7,28 +7,28 @@ using System.Threading.Tasks;
 
 namespace ShopCMS.Domain.Entities
 {
-    
-        public class SaleDecisionResult
-        {
-        
+
+    public class SaleDecisionResult
+    {
+
         public int DecisionId { get; set; }
 
-            public int RequestId { get; set; }
+        public int RequestId { get; set; }
 
-            public bool Allowed { get; set; }
+        public bool Allowed { get; set; }
 
-            public string ReasonCode { get; set; }
+        public string ReasonCode { get; set; }
 
-            public decimal? FinalPrice { get; set; }
+        public decimal? FinalPrice { get; set; }
 
-            public bool HasWarnings { get; set; }
+        public bool HasWarnings { get; set; }
 
-            // Navigation back
-            public SaleEligibilityRequest Request { get; set; }
+        // Navigation back
+        public SaleEligibilityRequest Request { get; set; }
 
-            // Explainable Pricing → 1-n
-            public ICollection<AppliedRule> AppliedRules { get; set; } = new List<AppliedRule>();
-        }
-    
+        // Explainable Pricing → 1-n
+        public ICollection<AppliedRule> AppliedRules { get; set; } = new List<AppliedRule>();
+    }
+
 
 }
