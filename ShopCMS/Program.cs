@@ -1,7 +1,12 @@
-using ShopCMS.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-
+using ShopCMS.Infrastructure.Auth;
+using ShopCMS.Infrastructure.Auth.Interfaces;
+using ShopCMS.Infrastructure.Persistence.Context;
 using System;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +28,34 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<CurrencyService>();
 
 
+builder.Services.Configure<JwtOptions>(
+    builder.Configuration.GetSection("Jwt"));
+
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", opt =>
+    {
+        var jwt = builder.Configuration
+            .GetSection("Jwt").Get<JwtOptions>();
+
+        opt.TokenValidationParameters = new()
+        {
+            ValidateIssuer = true,
+            ValidIssuer = jwt.Issuer,
+            ValidateAudience = true,
+            ValidAudience = jwt.Audience,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey =
+                new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(jwt.SigningKey)),
+            ValidateLifetime = true
+        };
+    });
+
+
+
 
 var app = builder.Build();
 
@@ -35,6 +68,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

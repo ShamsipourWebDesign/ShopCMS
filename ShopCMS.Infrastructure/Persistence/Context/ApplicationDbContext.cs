@@ -32,6 +32,9 @@ namespace ShopCMS.Infrastructure.Persistence.Context
         public DbSet<PriceLock> PriceLocks { get; set; }
         public DbSet<User> Users { get; set; }
 
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

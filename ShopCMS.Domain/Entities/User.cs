@@ -17,8 +17,14 @@ namespace ShopCMS.Domain.Entities
 
             public string Role { get; set; } // Admin / Consumer
 
-            // Navigation
-            public ICollection<SaleEligibilityRequest> Requests { get; set; } = new List<SaleEligibilityRequest>();
+        public string PasswordHash { get; set; } = string.Empty; // PBKDF2 hash
+        public bool IsActive { get; set; } = true;
+
+        // برای invalidate کردن همه access token ها
+        public int TokenVersion { get; set; } = 0;
+
+        // Navigation
+        public ICollection<SaleEligibilityRequest> Requests { get; set; } = new List<SaleEligibilityRequest>();
         }
     
 }
