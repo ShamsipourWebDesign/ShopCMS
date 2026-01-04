@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using ShopCMS.Application.Contracts;
 using ShopCMS.Domain.Pricing;
 using ShopCMS.Domain.Rules;
+using ShopCMS.Application.RulesEngine;
+
 
 namespace ShopCMS.Application.Services
 {
