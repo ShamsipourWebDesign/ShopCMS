@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using ShopCMS.Application.Interfaces.UserContext_Service;
 using ShopCMS.Infrastructure.Auth;
 using ShopCMS.Infrastructure.Auth.Interfaces;
 using ShopCMS.Infrastructure.Persistence.Context;
+using ShopCMS.Services;
 using System;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 
@@ -54,6 +56,8 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IUserContextService, UserContextService>();
 
 
 
