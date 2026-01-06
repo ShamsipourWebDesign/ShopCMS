@@ -49,6 +49,8 @@ LoggingConfiguration.ConfigureLogging();
 builder.Host.UseSerilog();
 
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

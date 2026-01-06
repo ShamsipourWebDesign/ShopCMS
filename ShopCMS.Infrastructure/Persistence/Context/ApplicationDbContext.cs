@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopCMS.Domain.Entities;
+using ShopCMS.Infrastructure.Audit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,9 @@ namespace ShopCMS.Infrastructure.Persistence.Context
         public DbSet<SnapshotPrice> SnapshotPrices { get; set; }
         public DbSet<PriceLock> PriceLocks { get; set; }
         public DbSet<User> Users { get; set; }
+
+        public DbSet<PricingAuditEntity> PricingAudits { get; set; }
+        public DbSet<PricingRuleAuditEntity> PricingRuleAudits { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
