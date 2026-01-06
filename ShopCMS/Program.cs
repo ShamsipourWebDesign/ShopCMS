@@ -1,5 +1,6 @@
 using ShopCMS.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using AspNetCoreRateLimit;
 
 using System;
 
@@ -17,6 +18,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
+builder.Services.AddInMemoryRateLimiting();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+
+builder.Services.Configure<IpRateLimitOptions>(options =>
+{
+    options.GeneralRules = new List<RateLimitRule>
+    {
+        new RateLimitRule
+        {
+            Endpoint = "*",
+            Period = "1m", // Period is 1 minute
+            PeriodTimespan = TimeSpan.FromMinutes(1),
+            Limit = 100 // Limit to 100 requests per minute
+        }
+    };
+});
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -36,6 +53,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseIpRateLimiting();
 
 app.MapControllers();
 
