@@ -1,7 +1,8 @@
 using ShopCMS.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using AspNetCoreRateLimit;
-
+using Serilog;
+using ShopCMS.Infrastructure.Logging;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +40,13 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<CurrencyService>();
 
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("logs/myapp.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+LoggingConfiguration.ConfigureLogging();
+builder.Host.UseSerilog();
 
 
 var app = builder.Build();
