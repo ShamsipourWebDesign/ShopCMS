@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopCMS.Domain", "ShopCMS.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopCMS.Infrastructure", "ShopCMS.Infrastructure\ShopCMS.Infrastructure.csproj", "{0315FBB3-0AD7-4310-81DE-3270B9EBDBF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopCMS.Api", "ShopCMS.Api\ShopCMS.Api.csproj", "{A406EAE0-7AA9-44A3-A123-3B70863EEC1E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
