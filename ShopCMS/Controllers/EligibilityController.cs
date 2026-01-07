@@ -16,11 +16,14 @@ namespace ShopCMS.Api.Controllers
         }
 
         [HttpPost("check")]
-        public async Task<IActionResult> Check([FromBody] EligibilityContext context)
+        public async Task<ActionResult<EligibilityResult>> Check([FromBody] EligibilityContext context)
         {
-            var result = await _eligibilityService.CheckAsync(context);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            return Ok(result);
+        var result = await _eligibilityService.CheckAsync(context);
+
+        return Ok(result);
         }
     }
 }
