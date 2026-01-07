@@ -2,6 +2,7 @@ using ShopCMS.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using ShopCMS.Application.Contracts;
 using ShopCMS.Application.Services;
+using ShopCMS.Application.Services.Providers;
 
 using System;
 
@@ -26,6 +27,7 @@ builder.Services.AddScoped<CurrencyService>();
 // register volatility service
 builder.Services.AddScoped<IVolatilityService, VolatilityService>();
 builder.Services.AddScoped<IEligibilityService, EligibilityService>();
+builder.Services.AddSingleton<FakeVolatilityProvider>();
 
 
 

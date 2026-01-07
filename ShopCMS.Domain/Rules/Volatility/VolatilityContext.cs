@@ -5,6 +5,15 @@ namespace ShopCMS.Domain.Volatility
 {
     public class VolatilityContext
     {
+        // مثل BTCUSDT یا USDTRY یا ETHUSDT
+        public string Symbol { get; set; }
+
+        // قیمت فعلی از provider (فیک یا واقعی)
+        public decimal CurrentPrice { get; set; }
+
+        // آخرین قیمت ثبت شده
+        public decimal PreviousPrice { get; set; }
+
         // History of rates over a period of time
         public List<CurrencyRatePoint> History { get; set; } = new();
 
