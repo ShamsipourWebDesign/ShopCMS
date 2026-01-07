@@ -28,6 +28,7 @@ builder.Services.AddScoped<CurrencyService>();
 builder.Services.AddScoped<IVolatilityService, VolatilityService>();
 builder.Services.AddScoped<IEligibilityService, EligibilityService>();
 builder.Services.AddSingleton<FakeVolatilityProvider>();
+builder.Services.AddScoped<IPricingService, PricingService>();
 
 
 

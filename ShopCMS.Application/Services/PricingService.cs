@@ -1,20 +1,22 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ShopCMS.Application.Contracts;
-using ShopCMS.Domain.Pricing;
-using ShopCMS.Domain.Rules;
 using ShopCMS.Application.RulesEngine;
-
+using ShopCMS.Application.Services.Composition;
+using ShopCMS.Domain.Pricing;
 
 namespace ShopCMS.Application.Services
 {
     public class PricingService : IPricingService
     {
-        private readonly IRuleEngine<PricingContext, PricingResult> _ruleEngine;
+        private readonly RuleEngine<PricingContext, PricingResult> _ruleEngine;
 
-        public PricingService(IRuleEngine<PricingContext, PricingResult> ruleEngine)
+        public PricingService()
         {
-            _ruleEngine = ruleEngine;
+            // Build rule engine with default pricing rules
+            _ruleEngine = new RuleEngine<PricingContext, PricingResult>(
+                PricingRulesFactory.CreateDefaultRules()
+            );
         }
 
         public Task<PricingResult> CalculatePriceAsync(
