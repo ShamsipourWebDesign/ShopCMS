@@ -1,5 +1,7 @@
 using ShopCMS.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using ShopCMS.Application.Contracts;
+using ShopCMS.Application.Services;
 
 using System;
 
@@ -21,6 +23,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<CurrencyService>();
+// register volatility service
+builder.Services.AddScoped<IVolatilityService, VolatilityService>();
+builder.Services.AddScoped<IEligibilityService, EligibilityService>();
 
 
 
