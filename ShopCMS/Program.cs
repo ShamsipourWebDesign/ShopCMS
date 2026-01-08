@@ -1,9 +1,11 @@
-using ShopCMS.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using ShopCMS.Application.Contracts;
 using ShopCMS.Application.Services;
 using ShopCMS.Application.Services.Providers;
-
+using ShopCMS.Domain.Entities.PriceLockApi;
+using ShopCMS.Domain.Interfaces;
+using ShopCMS.Infrastructure.Persistence.Context;
+using ShopCMS.Infrastructure.PriceLock;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +32,8 @@ builder.Services.AddScoped<IEligibilityService, EligibilityService>();
 builder.Services.AddSingleton<FakeVolatilityProvider>();
 builder.Services.AddScoped<IPricingService, PricingService>();
 
+builder.Services.AddScoped<PriceLockApi>();
+builder.Services.AddScoped<IPriceLockApiRepository, PriceLockApiRepository>();
 
 
 var app = builder.Build();
