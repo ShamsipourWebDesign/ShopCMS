@@ -1,12 +1,15 @@
 using Microsoft.EntityFrameworkCore;
+using Polly;
 using ShopCMS.Application.Contracts;
 using ShopCMS.Application.Services;
 using ShopCMS.Application.Services.Providers;
 using ShopCMS.Domain.Entities.PriceLockApi;
 using ShopCMS.Domain.Interfaces;
+using ShopCMS.Infrastructure.External;
 using ShopCMS.Infrastructure.Persistence.Context;
 using ShopCMS.Infrastructure.PriceLock;
 using System;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,11 +35,39 @@ builder.Services.AddScoped<IEligibilityService, EligibilityService>();
 builder.Services.AddSingleton<FakeVolatilityProvider>();
 builder.Services.AddScoped<IPricingService, PricingService>();
 
-builder.Services.AddScoped<PriceLockApi>();
+builder.Services.AddScoped<IPriceLockApiRepository, PriceLockApiRepository>();
+
+builder.Services.AddScoped<PriceLockService>(); 
 builder.Services.AddScoped<IPriceLockApiRepository, PriceLockApiRepository>();
 
 
+
+builder.Services.AddHttpClient<ShopCMS.Domain.Interfaces.ICurrencyRateProvider, CurrencyRateProvider>(client =>
+{
+    client.BaseAddress = new Uri("https://api.exchangerate.com/");
+    client.Timeout = TimeSpan.FromSeconds(3);
+})
+.AddTransientHttpErrorPolicy(policy =>
+    policy.WaitAndRetryAsync(3, retry =>
+        TimeSpan.FromMilliseconds(200 * retry)));
+
+
+
+
 var app = builder.Build();
+
+app.UseExceptionHandler(appError =>
+{
+    appError.Run(async context =>
+    {
+        context.Response.StatusCode = 503;
+        await context.Response.WriteAsJsonAsync(new
+        {
+            error = "External service unavailable"
+        });
+    });
+});
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
