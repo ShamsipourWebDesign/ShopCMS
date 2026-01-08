@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopCMS.Domain.Entities;
+using ShopCMS.Domain.Entities.PriceLockApi;
+using ShopCMS.Infrastructure.PriceLock;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,8 +31,9 @@ namespace ShopCMS.Infrastructure.Persistence.Context
         public DbSet<SaleDecisionResult> SaleDecisionResults { get; set; }
         public DbSet<AppliedRule> AppliedRules { get; set; }
         public DbSet<SnapshotPrice> SnapshotPrices { get; set; }
-        public DbSet<PriceLock> PriceLocks { get; set; }
+        public DbSet<PriceLockApi> PriceLockApi { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<PriceLockApiEntity> PriceLockApis { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
