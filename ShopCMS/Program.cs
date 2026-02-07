@@ -35,6 +35,7 @@ builder.Services.AddScoped<IEligibilityService, EligibilityService>();
 builder.Services.AddSingleton<FakeVolatilityProvider>();
 builder.Services.AddScoped<IPricingService, PricingService>();
 
+
 builder.Services.AddScoped<IPriceLockApiRepository, PriceLockApiRepository>();
 
 builder.Services.AddScoped<PriceLockService>(); 
@@ -50,6 +51,18 @@ builder.Services.AddHttpClient<ShopCMS.Domain.Interfaces.ICurrencyRateProvider, 
 .AddTransientHttpErrorPolicy(policy =>
     policy.WaitAndRetryAsync(3, retry =>
         TimeSpan.FromMilliseconds(200 * retry)));
+
+
+
+builder.Services.AddHttpClient<IExchangeRateClient, ExternalExchangeRateClient>(client =>
+{
+    client.BaseAddress = new Uri("https://api.exchangerate-api.com/v4/");
+    client.Timeout = TimeSpan.FromSeconds(3);
+})
+.AddTransientHttpErrorPolicy(policy =>
+    policy.WaitAndRetryAsync(3, retry =>
+        TimeSpan.FromMilliseconds(200 * retry)));
+
 
 
 
