@@ -11,7 +11,7 @@ namespace ShopCMS.Application.Services
     {
         private readonly RuleEngine<PricingContext, PricingResult> _ruleEngine;
 
-        public PricingService()
+        public PricingService(ICurrencyRateProvider @object)
         {
             // Build rule engine with default pricing rules
             _ruleEngine = new RuleEngine<PricingContext, PricingResult>(
